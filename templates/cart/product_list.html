@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="site-section">
+    <div class="container">
+      <ul class="nav justify-content-center">
+
+        {% for categoria in categorias %}
+        <li class="nav-link active"> <a href="?categoria={{ categoria.nombre }}" style="color: #6a0137;" class="d-flex">
+            <span>{{ categoria.nombre }}</span></a> 
+        </li>
+        {% endfor %} 
+        <li class="nav-link "> <a href="{% url 'cart:product-list' %}" style="color: #727272;" class="d-flex">
+            <span>Todo</span></a> 
+        </li>
+      </ul>
+        <div class="row mb-5 d-flex align-items-stretch">
+
+            {% for producto in object_list %}
+                <div class="col-sm-3 "  >
+
+                    <figure class="block-2-image" >
+                        <a href="{{ producto.get_absolute_url }}"><img src="{{ producto.imagen.url }}" class="img-fluid"></a>
+                    </figure>
+                    <h5 class="card-title" style="color: #6a0137;">{{ producto.titulo }}</h5>
+                    <p class="card-text ">{{ producto.descripcion }} </p>
+                    <h5 class="mb-8" style="text-align: right;">Q {{ producto.precio }}</h5>
+                    <!--- Obtender detalle del producto-->
+                    <a href="{{ producto.get_absolute_url }}" class="btn btn-secondary">Ver más</a>
+                </div>
+            {% endfor %}
+            
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!--paginacion -->
+
+        {% if is_paginated %}
+        <nav aria-label="Page navigation conatiner"></nav>
+        <ul class="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}" class="page-link" style="color: #6a0137;">&laquo; REGRESAR</a></li>
+        {% endif %}
+        {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}" class="page-link" style="color: #6a0137;"> SIGUIENTE &raquo;</a></li>
+
+        {% endif %}
+        </ul>
+        </nav>
+        </div>
+{% endif %}
+<!-- Fin paginacion-->
+
+
+
+{% endblock content %}

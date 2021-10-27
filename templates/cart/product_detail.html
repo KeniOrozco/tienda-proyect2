@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+<div class="site-section">
+    <div class="container">
+        <div class="row mb-5">
+
+            <div class="col-md-6">
+
+                <a><img src="{{ producto.imagen.url }}" class="img-fluid"></a>
+            </div>
+
+                <div class="col-md-6 mb-4" data-aos='fade-up'>
+
+
+                    <h2 class="card-title" style="color: #6a0137;">{{ producto.titulo }}</h2>
+                    <p>{{ producto.descripcion }}</p>
+                    <h6>Disponibles: {{ producto.stock }}</h6>
+                    {% if producto.in_stock %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+                        <button type='submit' class="btn btn-sm btn-secondary buy-now">Agregar al carrito</button> 
+                    </form>
+                    
+                    {% else %}
+                    <p>No disponibles en stock</p>
+                    {% endif %}
+                    <h5 class="mb-8" style="text-align: right;"><a style="color: #6a0137;" href="{% url 'cart:product-list' %}">Volver</a></h5>
+                </div>
+            
+
+            
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock content %}
