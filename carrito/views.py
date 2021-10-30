@@ -138,13 +138,6 @@ class CheckoutView(generic.FormView):
         context['orden'] = get_or_set_order_session(self.request)
         return context
 
-class OrdenDetailView(LoginRequiredMixin, generic.DetailView):
-    template_name = 'orden.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(OrdenDetailView, self).get_context_data(**kwargs)
-        context['orden'] = get_or_set_order_session(self.request)
-        return context
 
 
  

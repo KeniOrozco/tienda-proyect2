@@ -11,5 +11,4 @@ urlpatterns = [
     path('decrementar-cantidad/<pk>/', views.DecrementarCantidadView.as_view(), name='decrementar'),
     path('remover-carrito/<pk>/', views.QuitarCarritoView.as_view(), name='remove-from-cart'),
     path('checkout/', views.CheckoutView.as_view(), name='checkout'),
-    path('orders/<pk>/', views.OrdenDetailView.as_view(), name='order-detail')
 ]
