@@ -17,6 +17,9 @@
                                     <th>Costo</th>
                                     <th>Estado de la orden</th>
                                     <th>Estado del pago</th>
+                                    <th>Transporte</th>
+                                    <th>No. guia</th>
+                                 
                                 </tr>
                             </thead>
                             <tbody>
@@ -27,6 +30,13 @@
                                     <td>Q {{ orden.get_total }}</td>
                                     <td> <span class="badge bg-success rounded-pill" style="color: aliceblue;">{% if orden.ordenada %}Recibida{% else %}Rechazada{% endif %}</span></td>
                                     <td> <span class="badge bg-warning rounded-pill" style="color: aliceblue;">{% if orden.estado_pago %}Pagado{% else %}No pagado{% endif %}</span></td>
+                                    {% if orden.trasporte == 0 %}
+                                    <td>Estado pendiente de envio</td>
+                                    {% else %}
+                                    <td> {{ orden.get_trasporte_display }}</td>
+                                    {%endif%}
+                                    
+                                    <td>{{ orden.no_guia }}</td>
                                 </tr>
                                 {% empty %}
                                 <tr>

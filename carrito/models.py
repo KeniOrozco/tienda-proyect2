@@ -38,7 +38,7 @@ class Producto(models.Model):
     slug = models.SlugField(max_length=200, unique=True)
     imagen = models.ImageField(upload_to='producto_imagen')
     descripcion = models.TextField()
-    precio = models.IntegerField(default=0)
+    precio = models.DecimalField(max_digits=9, decimal_places=2)
     activo = models.BooleanField(default=False)
     categoria = models.ForeignKey(Categoria, related_name='categoria', on_delete=models.CASCADE)
     stock = models.IntegerField(default=0)
@@ -56,7 +56,7 @@ class Producto(models.Model):
 
     @property
     def in_stock(self):
-        return self.stock > 0
+        return self.stock > 11
 
 
 class OrdenItem(models.Model):
@@ -78,6 +78,12 @@ class OrdenItem(models.Model):
     class Meta:
         verbose_name_plural = 'Orden de items'
 
+TRASPORTE= ( 
+    (0, 'FORZA'), 
+    (1, 'GUATEX'), 
+    (2, 'CARGO'),
+) 
+
 class Orden(models.Model):
     usuario = models.ForeignKey(
         Usuario,blank=True, null=True, on_delete=models.CASCADE, related_name='orden_user')
@@ -85,8 +91,14 @@ class Orden(models.Model):
     fecha_orden = models.DateTimeField(blank=True, null=True)
     ordenada = models.BooleanField(default=False)
     estado_pago = models.BooleanField(default=False)
+    no_guia = models.CharField(max_length=50)
+    trasporte = models.IntegerField(choices=TRASPORTE, default=0)
     direccion_entrega = models.ForeignKey(
         Direccion, related_name='orden_entrega', blank=True, null=True, on_delete=models.SET_NULL)
+
+    def __str__(self):
+            txt="{0} {1} {2} {3} {4}"
+            return txt.format(self.numero_referencia, self.fecha_orden, self.direccion, self.telefono, self.user.name )
     
     def __str__(self):
         return self.numero_referencia

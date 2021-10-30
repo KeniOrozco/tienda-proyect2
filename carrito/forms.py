@@ -2,7 +2,7 @@ from django import forms
 from .models import OrdenItem, Producto, Direccion
 from django.contrib.auth import get_user_model
 
-User = get_user_model()
+User = get_user_model() #modelo abastracto
 
 class AddToCartForm(forms.ModelForm):
 
@@ -21,7 +21,7 @@ class AddToCartForm(forms.ModelForm):
         producto_id = self.producto_id
         producto = Producto.objects.get(id=self.producto_id)
         cantidad = self.cleaned_data['cantidad']
-
+    #generar error para stok
         if producto.stock < cantidad:
             raise forms.ValidationError(f"La cantidad seleccionada debe ser menor {producto.stock}")
 

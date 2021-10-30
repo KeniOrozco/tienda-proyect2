@@ -11,7 +11,7 @@ from django.conf import settings
 from django.contrib.auth.mixins import LoginRequiredMixin
 #Lista todos los productos
 class ProductoListView(generic.ListView):
-    template_name='cart/product_list.html'
+    template_name='cart/producto_list.html'
     paginate_by = 10 #paginacion de productos 
     def get_queryset(self):
         qs = Producto.objects.all()
@@ -28,7 +28,7 @@ class ProductoListView(generic.ListView):
         return context
 #Retorna el detalle de los productos
 class ProductoDetailView(generic.FormView):
-    template_name = 'cart/product_detail.html'
+    template_name = 'cart/producto_detalle.html'
     form_class = AddToCartForm
     def get_object(self):
         return get_object_or_404(Producto, slug=self.kwargs["slug"])
@@ -68,7 +68,7 @@ class ProductoDetailView(generic.FormView):
 
 
 class CartView(generic.TemplateView):
-    template_name = 'cart/cart.html'
+    template_name = 'cart/carrito.html'
 
     def get_context_data(self, *args, **kwargs):
         context = super(CartView, self).get_context_data(**kwargs)
@@ -105,6 +105,7 @@ class QuitarCarritoView(generic.View):
 class CheckoutView(generic.FormView):
     template_name = 'cart/checkout.html'
     form_class = DireccionForm
+
     def get_success_url(self):
         return reverse("cart:summary")
 
@@ -138,7 +139,7 @@ class CheckoutView(generic.FormView):
         return context
 
 class OrdenDetailView(LoginRequiredMixin, generic.DetailView):
-    template_name = 'order.html'
+    template_name = 'orden.html'
 
     def get_context_data(self, **kwargs):
         context = super(OrdenDetailView, self).get_context_data(**kwargs)
